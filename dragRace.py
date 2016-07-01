@@ -1,4 +1,5 @@
 import pygame
+import gameFunctions as gf
 from settings import Settings
 from car import Car
 
@@ -20,16 +21,15 @@ def runGame():
     # Start the main loop for the game
     while True:
         # Check for keypresses
-
+        gf.checkEvents()
 
 
         # Update the position of the car
-
+        
 
 
         # Update the screen
+        gf.updateScreen()
 
-
-        pass
 
 runGame()
