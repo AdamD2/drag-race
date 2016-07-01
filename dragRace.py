@@ -3,6 +3,7 @@ import gameFunctions as gf
 from headUpDisplay import HeadUpDisplay
 from settings import Settings
 from car import Car
+from gameStats import GameStats
 
 def runGame():
     # Initialize game, settings and screen object
@@ -19,16 +20,23 @@ def runGame():
     # Initialize the timer, gear text and speed
     hud = HeadUpDisplay(drSettings, screen, totalTime, car) 
 
+    # Store the game statistics
+    stats = GameStats()
+
     # Start the main loop for the game
     while True:
         # Check for keypresses
-        gf.checkEvents(car)
+        gf.checkEvents(car, stats)
 
+        # Update the game active state
+        if not car.onScreen:
+            stats.gameActive = False
 
-        # Update the position of the car and the hud
-        car.update() 
-        hud.update(totalTime, car)
-        totalTime += drSettings.timeIncrement
+        if stats.gameActive:
+            # Update the position of the car and the hud
+            car.update() 
+            hud.update(stats.totalTime, car)
+            stats.totalTime += drSettings.timeIncrement
 
         # Update the screen
         gf.updateScreen(drSettings, screen, car, hud)

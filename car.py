@@ -34,15 +34,16 @@ class Car(Sprite):
         self.velocity = 0
         self.initialVelocity = 0
         self.initialPos = 0
+        self.onScreen = True
 
     def update(self):
         """Update the car's position based on the movement flag."""
         sleep(self.drSettings.timeIncrement)
         self.time += self.drSettings.timeIncrement
 
-        onScreen = self.rect.right < self.screenRect.right
+        self.onScreen = self.rect.right < self.screenRect.right
 
-        if self.accelerating and onScreen:
+        if self.accelerating and self.onScreen:
             self.left = (self.initialPos + self.initialVelocity * self.time
                 + 0.5 * self.drSettings.acceleration[self.gear] * self.time**2)
             self.velocity = (self.initialVelocity + 
@@ -50,7 +51,7 @@ class Car(Sprite):
 
         peakVelocity = self.velocity > self.drSettings.speedCap[self.gear]
 
-        if not self.accelerating and onScreen and self.velocity > 0:
+        if not self.accelerating and self.onScreen and self.velocity > 0:
             self.left = (self.initialPos + self.initialVelocity * self.time
                 + 0.5 * self.drSettings.friction * self.time**2)
             self.velocity = (self.initialVelocity + 

@@ -1,17 +1,17 @@
 import sys
 import pygame
 
-def checkEvents(car):
+def checkEvents(car, stats):
     """Respond to keypresses and mouse events."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            checkKeydownEvents(event, car)
+            checkKeydownEvents(event, car, stats)
         elif event.type == pygame.KEYUP:
             checkKeyupEvents(event, car)
 
-def checkKeydownEvents(event, car):
+def checkKeydownEvents(event, car, stats):
     """Respond to keydown events."""
     if event.key == pygame.K_SPACE:
         # Accelerate the vehicle
@@ -25,7 +25,10 @@ def checkKeydownEvents(event, car):
         car.shiftDown()
     elif event.key == pygame.K_RIGHT:
         # Reset the game
-        pass
+        if stats.gameActive == False:
+            stats.gameActive = True
+        elif stats.gameAction == True:
+            stats.gameActive = False
     elif event.key == pygame.K_q:
         # Quit the game
         sys.exit()
