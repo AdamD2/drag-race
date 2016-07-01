@@ -1,5 +1,6 @@
 import pygame
 import gameFunctions as gf
+from headUpDisplay import HeadUpDisplay
 from settings import Settings
 from car import Car
 
@@ -10,13 +11,13 @@ def runGame():
     screen = pygame.display.set_mode(
         (drSettings.screenWidth, drSettings.screenHeight))
     pygame.display.set_caption("Drag Race")
+    totalTime = 0
 
     # Make the car
     car = Car(drSettings, screen)
 
     # Initialize the timer, gear text and speed
-
-
+    hud = HeadUpDisplay(drSettings, screen, totalTime, car) 
 
     # Start the main loop for the game
     while True:
@@ -24,12 +25,13 @@ def runGame():
         gf.checkEvents(car)
 
 
-        # Update the position of the car
+        # Update the position of the car and the hud
         car.update() 
-
+        hud.update(totalTime, car)
+        totalTime += 0.01
 
         # Update the screen
-        gf.updateScreen(drSettings, screen, car)
+        gf.updateScreen(drSettings, screen, car, hud)
 
 
 runGame()

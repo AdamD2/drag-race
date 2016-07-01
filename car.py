@@ -40,15 +40,16 @@ class Car(Sprite):
         sleep(0.01)
         self.time += 0.01
 
+        self.velocity = self.acceleration * self.time
+
         if self.accelerating and self.rect.right < self.screenRect.right:
             self.left = (self.initialPos + self.initialVelocity * self.time
                 + 0.5 * self.acceleration * self.time**2)
 
-        self.velocity = self.acceleration * self.time
-        if self.velocity > self.drSettings.speedCap[self.gear]:
-            # End the game because the engine is blown
-            # stats.gameActive = False
-            pass
+#        if self.velocity > self.drSettings.speedCap[self.gear]:
+#            self.acceleration = 0
+#        else:
+#            self.acceleration = self.drSettings.acceleration[self.gear]
 
         # Update the rect object
         self.rect.left = self.left

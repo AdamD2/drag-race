@@ -35,7 +35,7 @@ def checkKeyupEvents(event, car):
        # Stop accelerating the vehicle
        car.accelerating = False
 
-def updateScreen(drSettings, screen, car):
+def updateScreen(drSettings, screen, car, hud):
     """Update all images on the screen."""
     # Redraw the screen background
     screen.fill(drSettings.bgColor)
@@ -44,7 +44,7 @@ def updateScreen(drSettings, screen, car):
     car.blitme()
 
     # Draw the timer, gear text and speed
-
+    hud.showHud()
 
     # Make the most recently drawn screen visible
     pygame.display.flip()
