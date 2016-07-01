@@ -28,7 +28,7 @@ def runGame():
         # Update the position of the car and the hud
         car.update() 
         hud.update(totalTime, car)
-        totalTime += 0.01
+        totalTime += drSettings.timeIncrement
 
         # Update the screen
         gf.updateScreen(drSettings, screen, car, hud)

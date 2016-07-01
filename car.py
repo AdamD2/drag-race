@@ -37,14 +37,24 @@ class Car(Sprite):
 
     def update(self):
         """Update the car's position based on the movement flag."""
-        sleep(0.01)
-        self.time += 0.01
+        sleep(self.drSettings.timeIncrement)
+        self.time += self.drSettings.timeIncrement
 
-        self.velocity = self.acceleration * self.time
+        onScreen = self.rect.right < self.screenRect.right
 
-        if self.accelerating and self.rect.right < self.screenRect.right:
+        if self.accelerating and onScreen:
             self.left = (self.initialPos + self.initialVelocity * self.time
-                + 0.5 * self.acceleration * self.time**2)
+                + 0.5 * self.drSettings.acceleration[self.gear] * self.time**2)
+            self.velocity = (self.initialVelocity + 
+                self.drSettings.acceleration[self.gear] * self.time)
+
+        peakVelocity = self.velocity > self.drSettings.speedCap[self.gear]
+
+        if not self.accelerating and onScreen and self.velocity > 0:
+            self.left = (self.initialPos + self.initialVelocity * self.time
+                + 0.5 * self.drSettings.friction * self.time**2)
+            self.velocity = (self.initialVelocity + 
+                self.drSettings.friction * self.time)
 
 #        if self.velocity > self.drSettings.speedCap[self.gear]:
 #            self.acceleration = 0
@@ -54,11 +64,15 @@ class Car(Sprite):
         # Update the rect object
         self.rect.left = self.left
 
+    def newMotion(self):
+        self.initialVelocity = self.velocity
+        self.initialPos = self.rect.left
+        self.time = 0
+
     def shiftUp(self):
         """Move up a gear, with lower acceleration but higher speed."""
         if self.gear < 5:
             self.gear += 1
-            self.acceleration = self.drSettings.acceleration[self.gear] 
             self.initialVelocity = self.velocity
             self.initialPos = self.rect.left
             self.time = 0
@@ -67,7 +81,6 @@ class Car(Sprite):
         """Move down a gear, with higher acceleration but lower speed."""
         if self.gear > 0:
             self.gear -= 1
-            self.acceleration = self.drSettings.acceleration[self.gear]
             self.initialVelocity = self.velocity
             self.initialPos = self.rect.left
             self.time = 0

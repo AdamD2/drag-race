@@ -16,6 +16,7 @@ def checkKeydownEvents(event, car):
     if event.key == pygame.K_SPACE:
         # Accelerate the vehicle
         car.accelerating = True
+        car.newMotion()
     elif event.key == pygame.K_UP:
         # Shift up a gear
         car.shiftUp()
@@ -34,6 +35,7 @@ def checkKeyupEvents(event, car):
     if event.key == pygame.K_SPACE:
        # Stop accelerating the vehicle
        car.accelerating = False
+       car.newMotion()
 
 def updateScreen(drSettings, screen, car, hud):
     """Update all images on the screen."""
