@@ -23,14 +23,17 @@ class Car(Sprite):
         # Store a decimal value for the car's left
         self.left = float(self.rect.left)
 
-        # Movement flags
+        self.initializeDynamicSettings()
+
+    def initializeDynamicSettings(self):
+        """Initialize settings that change so that they can be reset."""
         self.accelerating = False
-
-        # Acceleration value
-        self.acceleration = 10.0
-
-        # Time value
+        self.acceleration = self.drSettings.acceleration[0]
         self.time = 0
+        self.gear = 0
+        self.velocity = 0
+        self.initialVelocity = 0
+        self.initialPos = 0
 
     def update(self):
         """Update the car's position based on the movement flag."""
@@ -38,10 +41,35 @@ class Car(Sprite):
         self.time += 0.01
 
         if self.accelerating and self.rect.right < self.screenRect.right:
-            self.left = 0.5 * self.acceleration * self.time**2
+            self.left = (self.initialPos + self.initialVelocity * self.time
+                + 0.5 * self.acceleration * self.time**2)
+
+        self.velocity = self.acceleration * self.time
+        if self.velocity > self.drSettings.speedCap[self.gear]:
+            # End the game because the engine is blown
+            # stats.gameActive = False
+            pass
 
         # Update the rect object
         self.rect.left = self.left
+
+    def shiftUp(self):
+        """Move up a gear, with lower acceleration but higher speed."""
+        if self.gear < 5:
+            self.gear += 1
+            self.acceleration = self.drSettings.acceleration[self.gear] 
+            self.initialVelocity = self.velocity
+            self.initialPos = self.rect.left
+            self.time = 0
+
+    def shiftDown(self):
+        """Move down a gear, with higher acceleration but lower speed."""
+        if self.gear > 0:
+            self.gear -= 1
+            self.acceleration = self.drSettings.acceleration[self.gear]
+            self.initialVelocity = self.velocity
+            self.initialPos = self.rect.left
+            self.time = 0
 
     def blitme(self):
         """Draw the car at its current location."""

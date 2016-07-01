@@ -8,4 +8,5 @@ class Settings():
         self.screenHeight = 800
         self.bgColor = (255, 255, 255)
 
-
+        self.acceleration = [0, 50, 40, 30, 20, 10]
+        self.speedCap = [10, 10, 40, 70, 100, 150]

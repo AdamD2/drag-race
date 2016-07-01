@@ -16,9 +16,12 @@ def checkKeydownEvents(event, car):
     if event.key == pygame.K_SPACE:
         # Accelerate the vehicle
         car.accelerating = True
-    elif event.key == pygame.K_LEFT:
+    elif event.key == pygame.K_UP:
         # Shift up a gear
-        pass
+        car.shiftUp()
+    elif event.key == pygame.K_DOWN:
+        # Shift down a gear
+        car.shiftDown()
     elif event.key == pygame.K_RIGHT:
         # Reset the game
         pass
