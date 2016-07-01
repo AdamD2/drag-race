@@ -29,7 +29,7 @@ def runGame():
 
 
         # Update the screen
-        gf.updateScreen()
+        gf.updateScreen(drSettings, screen, car)
 
 
 runGame()

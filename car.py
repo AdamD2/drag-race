@@ -24,3 +24,7 @@ class Car(Sprite):
 
         # Movement flags
         self.accelerating = False
+
+    def blitme(self):
+        """Draw the car at its current location."""
+        self.screen.blit(self.image, self.rect)

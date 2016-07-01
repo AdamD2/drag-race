@@ -24,6 +24,16 @@ def checkKeydownEvents(event):
         # Quit the game
         sys.exit()
 
-def updateScreen():
-    # Draw the car and text on the screen
-    pass
+def updateScreen(drSettings, screen, car):
+    """Update all images on the screen."""
+    # Redraw the screen background
+    screen.fill(drSettings.bgColor)
+
+    # Redraw the car
+    car.blitme()
+
+    # Draw the timer, gear text and speed
+
+
+    # Make the most recently drawn screen visible
+    pygame.display.flip()
