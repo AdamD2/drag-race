@@ -21,11 +21,11 @@ def runGame():
     # Start the main loop for the game
     while True:
         # Check for keypresses
-        gf.checkEvents()
+        gf.checkEvents(car)
 
 
         # Update the position of the car
-        
+        car.update() 
 
 
         # Update the screen

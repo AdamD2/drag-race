@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+from time import sleep
 
 class Car(Sprite):
     """A class to model and move the dragster."""
@@ -19,11 +20,28 @@ class Car(Sprite):
         self.rect.left = self.screenRect.left
         self.rect.centery = self.screenRect.centery
 
-        # Store a decimal value for the car's center
-        self.center = float(self.rect.centerx)
+        # Store a decimal value for the car's left
+        self.left = float(self.rect.left)
 
         # Movement flags
         self.accelerating = False
+
+        # Acceleration value
+        self.acceleration = 10.0
+
+        # Time value
+        self.time = 0
+
+    def update(self):
+        """Update the car's position based on the movement flag."""
+        sleep(0.01)
+        self.time += 0.01
+
+        if self.accelerating and self.rect.right < self.screenRect.right:
+            self.left = 0.5 * self.acceleration * self.time**2
+
+        # Update the rect object
+        self.rect.left = self.left
 
     def blitme(self):
         """Draw the car at its current location."""
