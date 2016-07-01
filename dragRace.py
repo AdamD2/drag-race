@@ -1,15 +1,19 @@
-
+import pygame
+from settings import Settings
+from car import Car
 
 def runGame():
     # Initialize game, settings and screen object
-
-
+    pygame.init()
+    drSettings = Settings()
+    screen = pygame.display.set_mode(
+        (drSettings.screenWidth, drSettings.screenHeight))
+    pygame.display.set_caption("Drag Race")
 
     # Make the car
+    car = Car(drSettings, screen)
 
-
-
-    # Initialize the timer and gear text
+    # Initialize the timer, gear text and speed
 
 
 
